@@ -1,5 +1,7 @@
 // Copyright 703 Games
 
+#pragma once
+
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameplayEffectTypes.h"
