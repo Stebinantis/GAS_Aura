@@ -47,6 +47,10 @@ struct FEffectProperties
 	UPROPERTY()
 	ACharacter* TargetCharacter = nullptr;
 };
+//typedef is specific to the FGaemeplayAttribute() signature, but TStaticFuncPtr is a template that can be used for any function signature
+//typedef TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr  FAttributeFuncPtr;
+template<class T>
+using TStaticFuncPtr =typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
 /**
  * 
  */
@@ -61,6 +65,10 @@ public:
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
+	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
+
+	TStaticFuncPtr<float(int32, float, int32)> RandomFunctionPointer;
+	
 	//Vital Attributes
 	 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital Attributes")
